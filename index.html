@@ -487,10 +487,34 @@
             color: #000;
         }
 
+        /* Iframe Optimization for Blogger */
+        .widget-container {
+            max-width: 100%;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        /* When embedded in iframe, remove outer padding */
+        body.iframe-mode {
+            padding: 0;
+            margin: 0;
+            background: white;
+        }
+
+        body.iframe-mode .widget-container {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 5px;
+            }
+
+            body.iframe-mode {
+                padding: 0;
             }
 
             .language-toggle {
@@ -543,20 +567,48 @@
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 2px;
+            }
+
+            body.iframe-mode {
+                padding: 0;
+            }
+
             .header {
-                padding: 20px;
+                padding: 15px;
             }
 
             .header h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+                padding-right: 80px;
             }
 
             .form-container {
-                padding: 20px 15px;
+                padding: 15px 10px;
             }
 
             .scheme-card {
-                padding: 20px;
+                padding: 15px;
+            }
+
+            .results-container {
+                padding: 0 10px 20px;
+            }
+
+            .email-capture {
+                padding: 20px 10px;
+            }
+
+            .footer-info {
+                padding: 15px 10px;
+            }
+        }
+
+        /* Blogger iframe specific optimizations */
+        @media (max-width: 800px) {
+            .widget-container {
+                border-radius: 8px;
             }
         }
 
@@ -619,12 +671,11 @@
                         <input type="number" id="income" name="income" min="0" required>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label for="state" data-lang-key="state">State</label>
                         <select id="state" name="state" required>
-                            <option value="" data-lang-key="selectState">Select your state</option>
+                            <option value="" data-lang-key="select_state">Select your state</option>
                             <option value="AP">Andhra Pradesh</option>
                             <option value="AR">Arunachal Pradesh</option>
                             <option value="AS">Assam</option>
@@ -645,119 +696,196 @@
                             <option value="NL">Nagaland</option>
                             <option value="OR">Odisha</option>
                             <option value="PB">Punjab</option>
-                            <option value="RJ">Rajasthan</n>                            <option value="SK">Sikkim</option>
+                            <option value="RJ">Rajasthan</option>
+                            <option value="SK">Sikkim</option>
                             <option value="TN">Tamil Nadu</option>
                             <option value="TG">Telangana</option>
                             <option value="TR">Tripura</option>
+                            <option value="UK">Uttarakhand</option>
                             <option value="UP">Uttar Pradesh</option>
-                            <option value="UT">Uttarakhand</option>
                             <option value="WB">West Bengal</option>
                             <option value="AN">Andaman and Nicobar Islands</option>
                             <option value="CH">Chandigarh</option>
                             <option value="DN">Dadra and Nagar Haveli and Daman and Diu</option>
-                            <option value="LD">Lakshadweep</option>
                             <option value="DL">Delhi</option>
-                            <option value="PY">Puducherry</option>
-                            <option value="LA">Ladakh</option>
                             <option value="JK">Jammu and Kashmir</option>
+                            <option value="LD">Lakshadweep</option>
+                            <option value="PY">Puducherry</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="caste" data-lang-key="caste">Caste Category</label>
+                        <label for="caste" data-lang-key="caste_category">Caste Category</label>
                         <select id="caste" name="caste" required>
-                            <option value="" data-lang-key="selectCategory">Select category</option>
-                            <option value="GEN" data-lang-key="general">General (GEN)</option>
-                            <option value="OBC" data-lang-key="obc">Other Backward Classes (OBC)</option>
-                            <option value="SC" data-lang-key="sc">Scheduled Castes (SC)</option>
-                            <option value="ST" data-lang-key="st">Scheduled Tribes (ST)</option>
+                            <option value="" data-lang-key="select_category">Select category</option>
+                            <option value="GEN">General (GEN)</option>
+                            <option value="OBC">Other Backward Classes (OBC)</option>
+                            <option value="SC">Scheduled Castes (SC)</option>
+                            <option value="ST">Scheduled Tribes (ST)</option>
                         </select>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="employment" data-lang-key="employment">Employment Type</label>
-                    <select id="employment" name="employment" required>
-                        <option value="" data-lang-key="selectEmployment">Select employment type</option>
-                        <option value="Salaried" data-lang-key="salaried">Salaried</option>
-                        <option value="Farmer" data-lang-key="farmer">Farmer</option>
-                        <option value="Self-Employed" data-lang-key="selfEmployed">Self-Employed</option>
-                        <option value="Unemployed" data-lang-key="unemployed">Unemployed</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employment" data-lang-key="employment_type">Employment Type</label>
+                        <select id="employment" name="employment" required>
+                            <option value="" data-lang-key="select_employment_type">Select employment type</option>
+                            <option value="Salaried">Salaried</option>
+                            <option value="Farmer">Farmer</option>
+                            <option value="Self-Employed">Self-Employed</option>
+                            <option value="Unemployed">Unemployed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" data-lang-key="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" data-lang-key="select_gender">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                 </div>
-
-                <button type="submit" class="check-btn" data-lang-key="checkEligibility">Check My Eligibility</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="disability" data-lang-key="disability_status">Disability Status</label>
+                        <select id="disability" name="disability" required>
+                            <option value="" data-lang-key="select_disability">Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location_type" data-lang-key="location_type">Location Type</label>
+                        <select id="location_type" name="location_type" required>
+                            <option value="" data-lang-key="select_location_type">Select location type</option>
+                            <option value="Urban">Urban</option>
+                            <option value="Rural">Rural</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bpl_card" data-lang-key="bpl_card">BPL Card</label>
+                        <select id="bpl_card" name="bpl_card" required>
+                            <option value="" data-lang-key="select_bpl_card">Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="marital_status" data-lang-key="marital_status">Marital Status</label>
+                        <select id="marital_status" name="marital_status" required>
+                            <option value="" data-lang-key="select_marital_status">Select marital status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widowed">Widowed</option>
+                            <option value="Divorced">Divorced</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="education_level" data-lang-key="education_level">Education Level</label>
+                        <select id="education_level" name="education_level" required>
+                            <option value="" data-lang-key="select_education_level">Select education level</option>
+                            <option value="Illiterate">Illiterate</option>
+                            <option value="Primary">Primary (1-5)</option>
+                            <option value="Middle">Middle (6-8)</option>
+                            <option value="Secondary">Secondary (9-10)</option>
+                            <option value="Higher Secondary">Higher Secondary (11-12)</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate & Above</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="check-btn" data-lang-key="check_eligibility">Check My Eligibility</button>
             </form>
         </div>
 
-        <!-- Loading -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p data-lang-key="checking">Checking your eligibility...</p>
-        </div>
-
-        <!-- Results -->
+        <!-- Results Section -->
         <div class="results-container" id="results">
             <div class="results-header">
-                <h2 data-lang-key="eligibleSchemes">Your Eligible Schemes</h2>
-                <p data-lang-key="resultsDescription">Based on your profile, here are the government schemes you may be eligible for:</p>
+                <h2 data-lang-key="your_eligible_schemes">Your Eligible Schemes</h2>
+                <p data-lang-key="based_on_profile">Based on your profile, here are the government schemes you may be eligible for:</p>
             </div>
-            
-            <!-- Search Filter -->
+
             <div class="search-filter">
-                <input type="text" id="schemeSearch" placeholder="Search schemes by keyword (e.g., housing, health)" data-lang-key="searchPlaceholder">
+                <input type="text" id="schemeSearch" placeholder="Search schemes by keyword (e.g., housing, health)" data-lang-key="search_schemes_placeholder">
             </div>
-            
-            <div id="schemesList"></div>
+
+            <div id="schemeResults">
+                <!-- Scheme cards will be dynamically inserted here -->
+            </div>
+
+            <div class="no-results" id="noResultsMessage" style="display: none;">
+                <h3 data-lang-key="no_schemes_found_title">No Schemes Found</h3>
+                <p data-lang-key="no_schemes_found_text">Unfortunately, no schemes match your current profile. Please try adjusting your criteria or check back later for new schemes.</p>
+                <button class="try-again-btn" data-lang-key="try_again_button" onclick="resetForm()">Try Again</button>
+            </div>
 
             <!-- PDF Download Section -->
-            <div class="pdf-download-section" id="pdfDownloadSection">
-                <h3 data-lang-key="downloadReport">📄 Download Your Scheme Report</h3>
+            <div class="pdf-download-section">
+                <h3 data-lang-key="download_report_title">📄 Download Your Scheme Report</h3>
                 <div class="pdf-download-actions">
-                    <button class="download-pdf-btn" onclick="downloadPDF()" data-lang-key="downloadPDF">Download PDF</button>
-                    <button class="whatsapp-share-btn" onclick="shareOnWhatsApp()" data-lang-key="shareWhatsApp">📱 Send to WhatsApp</button>
+                    <button class="download-pdf-btn" data-lang-key="download_pdf_button" onclick="generatePdfReport()">Download PDF</button>
+                    <button class="whatsapp-share-btn" data-lang-key="send_whatsapp_button" onclick="shareOnWhatsApp()">📱 Send to WhatsApp</button>
                 </div>
             </div>
-
-            <button class="try-again-btn" onclick="resetTool()" data-lang-key="tryAgain">Try Again</button>
-        </div>
-
-        <!-- Footer Info -->
-        <div class="footer-info">
-            <p data-lang-key="footerInfo">This tool includes top schemes like PMAY, Ayushman Bharat, Ujjwala Yojana, E-Shram, and more.</p>
-            <div class="footer-watermark" data-lang-key="watermark">Built by YojanaCheck – India’s Free Scheme Eligibility Tool (2025)</div>
         </div>
 
         <!-- Email Capture -->
         <div class="email-capture">
-            <h3 data-lang-key="emailUpdates">Get personalized scheme updates via email</h3>
+            <h3 data-lang-key="email_updates_title">Get personalized scheme updates via email</h3>
             <div class="email-form">
-                <input type="email" class="email-input" placeholder="Enter your email address" id="emailInput" data-lang-key="emailPlaceholder">
-                <button type="button" class="email-submit" onclick="subscribeEmail()" data-lang-key="subscribe">Subscribe</button>
+                <input type="email" id="emailInput" class="email-input" placeholder="Enter your email address" data-lang-key="email_placeholder">
+                <button type="button" class="email-submit" data-lang-key="subscribe_button" onclick="subscribeEmail()">Subscribe</button>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="footer-info">
+            <p data-lang-key="footer_text">This tool includes top schemes like PMAY, Ayushman Bharat, Ujjwala Yojana, E-Shram, and more.</p>
+            <div class="footer-watermark">
+                Built by YojanaCheck – India’s Free Scheme Eligibility Tool (2025)
             </div>
         </div>
     </div>
 
     <!-- Modal for Application Form -->
-    <div id="applicationModal" class="modal">
+    <div id="applicationFormModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalContent"></div>
+            <h2 data-lang-key="application_form_title">Simulated Application Form</h2>
+            <p data-lang-key="application_form_disclaimer">This is a simulated form for demonstration purposes only. Please refer to the official scheme website for actual application procedures.</p>
+            <pre id="prefilledFormData"></pre>
+            <button class="download-pdf-btn" data-lang-key="download_form_pdf" onclick="downloadFormPdf()">Download Form PDF</button>
         </div>
     </div>
 
     <script>
-        // Disable right-click and inspect element shortcuts
+        // Disable right-click
         document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('keydown', event => {
-            if (event.key === 'F12' || 
-                (event.ctrlKey && event.shiftKey && event.key === 'I') || 
-                (event.ctrlKey && event.shiftKey && event.key === 'J') || 
-                (event.ctrlKey && event.key === 'U')) {
-                event.preventDefault();
-            }
-        });
 
-        // Language translations
+        // Disable common dev tool shortcuts
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123) { // F12
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { // Ctrl+S
+                return false;
+            }
+        };
+
+        // Language data
         const translations = {
             en: {
                 language: "🌐 Language:",
@@ -766,621 +894,798 @@
                 age: "Age",
                 income: "Annual Household Income (₹)",
                 state: "State",
-                selectState: "Select your state",
-                caste: "Caste Category",
-                selectCategory: "Select category",
-                general: "General (GEN)",
-                obc: "Other Backward Classes (OBC)",
-                sc: "Scheduled Castes (SC)",
-                st: "Scheduled Tribes (ST)",
-                employment: "Employment Type",
-                selectEmployment: "Select employment type",
-                salaried: "Salaried",
-                farmer: "Farmer",
-                selfEmployed: "Self-Employed",
-                unemployed: "Unemployed",
-                checkEligibility: "Check My Eligibility",
-                checking: "Checking your eligibility...",
-                eligibleSchemes: "Your Eligible Schemes",
-                resultsDescription: "Based on your profile, here are the government schemes you may be eligible for:",
-                searchPlaceholder: "Search schemes by keyword (e.g., housing, health)",
-                downloadReport: "📄 Download Your Scheme Report",
-                downloadPDF: "Download PDF",
-                shareWhatsApp: "📱 Send to WhatsApp",
-                footerInfo: "This tool includes top schemes like PMAY, Ayushman Bharat, Ujjwala Yojana, E-Shram, and more.",
-                emailUpdates: "Get personalized scheme updates via email",
-                emailPlaceholder: "Enter your email address",
-                subscribe: "Subscribe",
-                applyNow: "Apply Now",
-                downloadGuide: "Download PDF Guide",
-                generateForm: "Generate Application Form",
-                eligibilitySummary: "Your Eligibility:",
-                noSchemes: "No schemes found",
-                noSchemesDesc: "Based on your current profile, we couldn't find any matching schemes. Please check back later or contact your local government office for more information.",
-                income_ews: "EWS (≤₹3L)",
-                income_lig: "LIG (₹3-6L)",
-                income_mig1: "MIG I (₹6-12L)",
-                income_mig2: "MIG II (₹12-18L)",
-                income_above: "Above MIG II (>₹18L)",
-                watermark: "Built by YojanaCheck – India’s Free Scheme Eligibility Tool (2025)",
-                tryAgain: "Try Again"
+                select_state: "Select your state",
+                caste_category: "Caste Category",
+                select_category: "Select category",
+                employment_type: "Employment Type",
+                select_employment_type: "Select employment type",
+                gender: "Gender",
+                select_gender: "Select gender",
+                disability_status: "Disability Status",
+                select_disability: "Select",
+                location_type: "Location Type",
+                select_location_type: "Select location type",
+                bpl_card: "BPL Card",
+                select_bpl_card: "Select",
+                marital_status: "Marital Status",
+                select_marital_status: "Select marital status",
+                education_level: "Education Level",
+                select_education_level: "Select education level",
+                check_eligibility: "Check My Eligibility",
+                your_eligible_schemes: "Your Eligible Schemes",
+                based_on_profile: "Based on your profile, here are the government schemes you may be eligible for:",
+                search_schemes_placeholder: "Search schemes by keyword (e.g., housing, health)",
+                apply_now: "Apply Now",
+                download_pdf_guide: "Download PDF Guide",
+                generate_application_form: "Generate Application Form",
+                download_report_title: "📄 Download Your Scheme Report",
+                download_pdf_button: "Download PDF",
+                send_whatsapp_button: "📱 Send to WhatsApp",
+                email_updates_title: "Get personalized scheme updates via email",
+                email_placeholder: "Enter your email address",
+                subscribe_button: "Subscribe",
+                no_schemes_found_title: "No Schemes Found",
+                no_schemes_found_text: "Unfortunately, no schemes match your current profile. Please try adjusting your criteria or check back later for new schemes.",
+                try_again_button: "Try Again",
+                application_form_title: "Simulated Application Form",
+                application_form_disclaimer: "This is a simulated form for demonstration purposes only. Please refer to the official scheme website for actual application procedures.",
+                download_form_pdf: "Download Form PDF",
+                footer_text: "This tool includes top schemes like PMAY, Ayushman Bharat, Ujjwala Yojana, E-Shram, and more.",
+                income_category_ews: "EWS (Economically Weaker Section)",
+                income_category_lig: "LIG (Low Income Group)",
+                income_category_mig1: "MIG-I (Middle Income Group-I)",
+                income_category_mig2: "MIG-II (Middle Income Group-II)",
+                income_category_hig: "HIG (High Income Group)",
+                income_category_general: "General Income Group"
             },
             hi: {
                 language: "🌐 भाषा:",
-                title: "योजना चेक – भारत में आपकी पात्र सरकारी योजनाएं खोजें (2025)",
-                subtitle: "अपनी प्रोफाइल के आधार पर सरकारी योजनाओं की खोज करें",
+                title: "योजनाचेक – भारत में आपकी पात्र सरकारी योजनाएं खोजें (2025)",
+                subtitle: "अपनी प्रोफाइल के आधार पर सरकारी योजनाएं खोजें जिनके लिए आप पात्र हैं",
                 age: "आयु",
                 income: "वार्षिक पारिवारिक आय (₹)",
                 state: "राज्य",
-                selectState: "अपना राज्य चुनें",
-                caste: "जाति श्रेणी",
-                selectCategory: "श्रेणी चुनें",
-                general: "सामान्य (GEN)",
-                obc: "अन्य पिछड़ा वर्ग (OBC)",
-                sc: "अनुसूचित जाति (SC)",
-                st: "अनुसूचित जनजाति (ST)",
-                employment: "रोजगार प्रकार",
-                selectEmployment: "रोजगार प्रकार चुनें",
-                salaried: "वेतनभोगी",
-                farmer: "किसान",
-                selfEmployed: "स्व-रोजगार",
-                unemployed: "बेरोजगार",
-                checkEligibility: "मेरी पात्रता जांचें",
-                checking: "आपकी पात्रता की जांच की जा रही है...",
-                eligibleSchemes: "आपकी पात्र योजनाएं",
-                resultsDescription: "आपकी प्रोफाइल के आधार पर, यहां वे सरकारी योजनाएं हैं जिनके लिए आप पात्र हो सकते हैं:",
-                searchPlaceholder: "कीवर्ड द्वारा योजनाएं खोजें (जैसे, आवास, स्वास्थ्य)",
-                downloadReport: "📄 अपनी योजना रिपोर्ट डाउनलोड करें",
-                downloadPDF: "PDF डाउनलोड करें",
-                shareWhatsApp: "📱 व्हाट्सऐप पर भेजें",
-                footerInfo: "इस टूल में PMAY, आयुष्मान भारत, उज्ज्वला योजना, ई-श्रम और अन्य शीर्ष योजनाएं शामिल हैं।",
-                emailUpdates: "ईमेल के माध्यम से व्यक्तिगत योजना अपडेट प्राप्त करें",
-                emailPlaceholder: "अपना ईमेल पता दर्ज करें",
-                subscribe: "सब्सक्राइब करें",
-                applyNow: "अभी आवेदन करें",
-                downloadGuide: "PDF गाइड डाउनलोड करें",
-                generateForm: "आवेदन फॉर्म बनाएं",
-                eligibilitySummary: "आपकी पात्रता:",
-                noSchemes: "कोई योजना नहीं मिली",
-                noSchemesDesc: "आपकी वर्तमान प्रोफाइल के आधार पर, हमें कोई मैचिंग योजना नहीं मिली। कृपया बाद में जांचें या अधिक जानकारी के लिए अपने स्थानीय सरकारी कार्यालय से संपर्क करें।",
-                income_ews: "EWS (≤₹3L)",
-                income_lig: "LIG (₹3-6L)",
-                income_mig1: "MIG I (₹6-12L)",
-                income_mig2: "MIG II (₹12-18L)",
-                income_above: "MIG II से ऊपर (>₹18L)",
-                watermark: "योजना चेक द्वारा निर्मित – भारत का निःशुल्क योजना पात्रता उपकरण (2025)",
-                tryAgain: "पुनः प्रयास करें"
+                select_state: "अपना राज्य चुनें",
+                caste_category: "जाति श्रेणी",
+                select_category: "श्रेणी चुनें",
+                employment_type: "रोजगार प्रकार",
+                select_employment_type: "रोजगार प्रकार चुनें",
+                gender: "लिंग",
+                select_gender: "लिंग चुनें",
+                disability_status: "दिव्यांगता स्थिति",
+                select_disability: "चुनें",
+                location_type: "स्थान का प्रकार",
+                select_location_type: "स्थान का प्रकार चुनें",
+                bpl_card: "बीपीएल कार्ड",
+                select_bpl_card: "चुनें",
+                marital_status: "वैवाहिक स्थिति",
+                select_marital_status: "वैवाहिक स्थिति चुनें",
+                education_level: "शिक्षा का स्तर",
+                select_education_level: "शिक्षा का स्तर चुनें",
+                check_eligibility: "मेरी पात्रता जांचें",
+                your_eligible_schemes: "आपकी पात्र योजनाएं",
+                based_on_profile: "आपकी प्रोफाइल के आधार पर, यहां सरकारी योजनाएं हैं जिनके लिए आप पात्र हो सकते हैं:",
+                search_schemes_placeholder: "योजनाओं को कीवर्ड द्वारा खोजें (जैसे: आवास, स्वास्थ्य)",
+                apply_now: "अभी आवेदन करें",
+                download_pdf_guide: "पीडीएफ गाइड डाउनलोड करें",
+                generate_application_form: "आवेदन पत्र बनाएं",
+                download_report_title: "📄 अपनी योजना रिपोर्ट डाउनलोड करें",
+                download_pdf_button: "पीडीएफ डाउनलोड करें",
+                send_whatsapp_button: "📱 व्हाट्सएप पर भेजें",
+                email_updates_title: "ईमेल के माध्यम से व्यक्तिगत योजना अपडेट प्राप्त करें",
+                email_placeholder: "अपना ईमेल पता दर्ज करें",
+                subscribe_button: "सब्सक्राइब करें",
+                no_schemes_found_title: "कोई योजना नहीं मिली",
+                no_schemes_found_text: "दुर्भाग्य से, आपकी वर्तमान प्रोफाइल से कोई योजना मेल नहीं खाती। कृपया अपनी मानदंड समायोजित करने का प्रयास करें या नई योजनाओं के लिए बाद में देखें।",
+                try_again_button: "पुनः प्रयास करें",
+                application_form_title: "सिम्युलेटेड आवेदन पत्र",
+                application_form_disclaimer: "यह केवल प्रदर्शन उद्देश्यों के लिए एक सिम्युलेटेड फॉर्म है। वास्तविक आवेदन प्रक्रियाओं के लिए कृपया आधिकारिक योजना वेबसाइट देखें।",
+                download_form_pdf: "फॉर्म पीडीएफ डाउनलोड करें",
+                footer_text: "इस टूल में पीएमएवाई, आयुष्मान भारत, उज्ज्वला योजना, ई-श्रम, और बहुत कुछ जैसी शीर्ष योजनाएं शामिल हैं।",
+                income_category_ews: "ईडब्ल्यूएस (आर्थिक रूप से कमजोर वर्ग)",
+                income_category_lig: "एलआईजी (निम्न आय वर्ग)",
+                income_category_mig1: "एमआईजी-I (मध्यम आय वर्ग-I)",
+                income_category_mig2: "एमआईजी-II (मध्यम आय वर्ग-II)",
+                income_category_hig: "एचआईजी (उच्च आय वर्ग)",
+                income_category_general: "सामान्य आय वर्ग"
             }
         };
 
-        // Current language
-        let currentLanguage = 'en';
-        let currentUserData = null;
-        let currentEligibleSchemes = [];
+        let currentLang = localStorage.getItem('yojanaCheckLanguage') || 'en';
 
-        // Government Schemes Database
-        const schemesDatabase = [
-            {
-                name: "Pradhan Mantri Awas Yojana (PMAY)",
-                nameHi: "प्रधान मंत्री आवास योजना (PMAY)",
-                description: "Housing scheme providing subsidies for home purchase or construction for economically weaker sections.",
-                descriptionHi: "आर्थिक रूप से कमजोर वर्गों के लिए घर खरीदने या निर्माण के लिए सब्सिडी प्रदान करने वाली आवास योजना।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 1800000, // Up to 18 lakh for MIG II
-                    minAge: 18,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Salaried", "Self-Employed", "Unemployed"]
-                },
-                applyUrl: "https://pmaymis.gov.in/",
-                pdfUrl: "https://pmaymis.gov.in/Upload/Docs/PMAY(U)%20Guidelines.pdf"
-            },
-            {
-                name: "Ayushman Bharat (PM-JAY)",
-                nameHi: "आयुष्मान भारत (PM-JAY)",
-                description: "Health insurance scheme providing coverage up to ₹5 lakh per family per year for secondary and tertiary care.",
-                descriptionHi: "द्वितीयक और तृतीयक देखभाल के लिए प्रति परिवार प्रति वर्ष ₹5 लाख तक का कवरेज प्रदान करने वाली स्वास्थ्य बीमा योजना।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 600000, // For general eligibility, senior citizens above 70 no income limit
-                    minAge: 0,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Salaried", "Farmer", "Self-Employed", "Unemployed"],
-                    specialConditions: ["Senior citizens above 70 years eligible regardless of income"]
-                },
-                applyUrl: "https://pmjay.gov.in/",
-                pdfUrl: "https://pmjay.gov.in/sites/default/files/2023-03/PMJAY%20-%20A%20Guide%20for%20Beneficiaries.pdf"
-            },
-            {
-                name: "Pradhan Mantri Ujjwala Yojana (PMUY)",
-                nameHi: "प्रधान मंत्री उज्ज्वला योजना (PMUY)",
-                description: "Free LPG connections to women from Below Poverty Line (BPL) households.",
-                descriptionHi: "गरीबी रेखा से नीचे (BPL) परिवारों की महिलाओं को मुफ्त LPG कनेक्शन।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 300000, // BPL households, typically < 3 lakh
-                    minAge: 18,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Farmer", "Self-Employed", "Unemployed"],
-                    gender: "Female"
-                },
-                applyUrl: "https://www.pmuy.gov.in/",
-                pdfUrl: "https://www.pmuy.gov.in/documents/PMUY%20Scheme%20Document.pdf"
-            },
-            {
-                name: "E-Shram Portal Registration",
-                nameHi: "ई-श्रम पोर्टल पंजीकरण",
-                description: "Registration portal for unorganized workers providing social security benefits and accident insurance.",
-                descriptionHi: "असंगठित श्रमिकों के लिए पंजीकरण पोर्टल जो सामाजिक सुरक्षा लाभ और दुर्घटना बीमा प्रदान करता है।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 1500000, // Not an income tax payee, typically below this threshold
-                    minAge: 16,
-                    maxAge: 59,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Farmer", "Self-Employed", "Unemployed"]
-                },
-                applyUrl: "https://eshram.gov.in/",
-                pdfUrl: "https://eshram.gov.in/assets/uploads/eShram_FAQs_English.pdf"
-            },
-            {
-                name: "Pradhan Mantri Kaushal Vikas Yojana (PMKVY)",
-                nameHi: "प्रधान मंत्री कौशल विकास योजना (PMKVY)",
-                description: "Skill development training program for youth to enhance employability and productivity.",
-                descriptionHi: "युवाओं के लिए रोजगार क्षमता और उत्पादकता बढ़ाने के लिए कौशल विकास प्रशिक्षण कार्यक्रम।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 800000, // No strict income limit, but targets unemployed/school dropouts
-                    minAge: 18,
-                    maxAge: 35,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Unemployed", "Self-Employed"]
-                },
-                applyUrl: "https://www.pmkvyofficial.org/",
-                pdfUrl: "https://www.msde.gov.in/static/uploads/2024/02/PMKVY-4.0-Guidelines_final-copy.pdf"
-            },
-            {
-                name: "Pradhan Mantri MUDRA Yojana",
-                nameHi: "प्रधान मंत्री मुद्रा योजना",
-                description: "Provides loans up to ₹10 lakh for non-corporate, non-farm small/micro enterprises.",
-                descriptionHi: "गैर-कॉर्पोरेट, गैर-कृषि छोटे/सूक्ष्म उद्यमों के लिए ₹10 लाख तक का ऋण प्रदान करती है।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 1500000, // No strict income limit, but for micro enterprises
-                    minAge: 18,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Self-Employed", "Unemployed"]
-                },
-                applyUrl: "https://www.mudra.org.in/",
-                pdfUrl: "https://www.mudra.org.in/resources/pdf/PMMY-Scheme-Document.pdf"
-            },
-            {
-                name: "Atal Pension Yojana (APY)",
-                nameHi: "अटल पेंशन योजना (APY)",
-                description: "Pension scheme for workers in unorganized sector providing guaranteed minimum pension after 60 years.",
-                descriptionHi: "असंगठित क्षेत्र के श्रमिकों के लिए पेंशन योजना जो 60 वर्ष के बाद गारंटीशुदा न्यूनतम पेंशन प्रदान करती है।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 500000, // Not an income tax payer, typically below this threshold
-                    minAge: 18,
-                    maxAge: 40,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Farmer", "Self-Employed", "Unemployed"]
-                },
-                applyUrl: "https://npscra.nsdl.co.in/",
-                pdfUrl: "https://npscra.nsdl.co.in/download/non-government-sector/all-citizens-of-india/forms/APY-FAQs.pdf"
-            },
-            {
-                name: "Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)",
-                nameHi: "महात्मा गांधी राष्ट्रीय ग्रामीण रोजगार गारंटी अधिनियम (MGNREGA)",
-                description: "Guarantees 100 days of wage employment in rural areas for unskilled manual work.",
-                descriptionHi: "अकुशल शारीरिक कार्य के लिए ग्रामीण क्षेत्रों में 100 दिन के मजदूरी रोजगार की गारंटी देता है।",
-                eligibility: {
-                    minIncome: 0,
-                    maxIncome: 400000, // Targets rural poor households
-                    minAge: 18,
-                    categories: ["GEN", "OBC", "SC", "ST"],
-                    employment: ["Farmer", "Unemployed"],
-                    location: "Rural"
-                },
-                applyUrl: "https://nrega.nic.in/",
-                pdfUrl: "https://nrega.nic.in/Circulars/MGNREGA_Operational_Guidelines_2013.pdf"
-            }
-        ];
-
-        // Initialize language on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load saved language preference
-            const savedLanguage = localStorage.getItem('yojanacheck_language') || 'en';
-            currentLanguage = savedLanguage;
-            document.getElementById('languageSelect').value = savedLanguage;
-            updateLanguage();
-        });
-
-        // Change language function
         function changeLanguage() {
-            const selectedLanguage = document.getElementById('languageSelect').value;
-            currentLanguage = selectedLanguage;
-            localStorage.setItem('yojanacheck_language', selectedLanguage);
-            updateLanguage();
+            const selectElement = document.getElementById('languageSelect');
+            currentLang = selectElement.value;
+            localStorage.setItem('yojanaCheckLanguage', currentLang);
+            applyTranslations();
         }
 
-        // Update all text elements based on current language
-        function updateLanguage() {
-            const elements = document.querySelectorAll('[data-lang-key]');
-            elements.forEach(element => {
+        function applyTranslations() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                if (translations[currentLanguage] && translations[currentLanguage][key]) {
-                    if (element.tagName === 'INPUT' && element.type !== 'submit') {
-                        element.placeholder = translations[currentLanguage][key];
+                if (translations[currentLang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[currentLang][key];
+                    } else if (element.tagName === 'OPTION' && element.parentElement.id !== 'languageSelect') {
+                        // For select options, only translate if it's not the language select itself
+                        element.textContent = translations[currentLang][key];
                     } else {
-                        element.textContent = translations[currentLanguage][key];
+                        element.textContent = translations[currentLang][key];
                     }
                 }
             });
+            // Special handling for select options that are not part of data-lang-key
+            document.querySelector('#state option[value=""]').textContent = translations[currentLang].select_state;
+            document.querySelector('#caste option[value=""]').textContent = translations[currentLang].select_category;
+            document.querySelector('#employment option[value=""]').textContent = translations[currentLang].select_employment_type;
+            document.querySelector('#gender option[value=""]').textContent = translations[currentLang].select_gender;
+            document.querySelector('#disability option[value=""]').textContent = translations[currentLang].select_disability;
+            document.querySelector('#location_type option[value=""]').textContent = translations[currentLang].select_location_type;
+            document.querySelector('#bpl_card option[value=""]').textContent = translations[currentLang].select_bpl_card;
+            document.querySelector('#marital_status option[value=""]').textContent = translations[currentLang].select_marital_status;
+            document.querySelector('#education_level option[value=""]').textContent = translations[currentLang].select_education_level;
 
-            // Update document language attribute
-            document.documentElement.lang = currentLanguage;
-
-            // Re-render results if they exist
-            if (currentEligibleSchemes.length > 0 && currentUserData) {
-                displayResults(currentEligibleSchemes, currentUserData);
-            }
         }
 
-        // Form submission handler
-        document.getElementById('eligibilityForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            checkEligibility();
+        // Initialize language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('languageSelect').value = currentLang;
+            applyTranslations();
         });
 
-        // Search functionality
-        document.getElementById('schemeSearch').addEventListener('input', function(e) {
-            filterSchemes(e.target.value);
-        });
+        // Scheme data (simplified for demonstration)
+        const schemes = [
+            {
+                id: 'PMAY',
+                name: 'Pradhan Mantri Awas Yojana (PMAY)',
+                description: 'Housing scheme providing subsidies for home purchase or construction for economically weaker sections and low/middle income groups.',
+                eligibility: {
+                    age: { min: 18 },
+                    income: { EWS: 300000, LIG: 600000, MIG1: 1200000, MIG2: 1800000 }, // Annual income in INR
+                    caste: ['GEN', 'OBC', 'SC', 'ST'],
+                    employment: ['Salaried', 'Self-Employed'],
+                    gender: ['Male', 'Female', 'Other'],
+                    location_type: ['Urban'],
+                    marital_status: ['Married'],
+                },
+                links: {
+                    apply: 'https://pmaymis.gov.in/',
+                    pdf: 'https://pmaymis.gov.in/Upload/pdf/PMAY(U)_Scheme_Guidelines.pdf'
+                }
+            },
+            {
+                id: 'AyushmanBharat',
+                name: 'Ayushman Bharat (PM-JAY)',
+                description: 'Health insurance scheme providing coverage up to ₹5 lakh per family per year for secondary and tertiary care.',
+                eligibility: {
+                    age: { min: 0 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // No specific income limit, focuses on deprived rural families and identified occupational categories
+                    caste: ['SC', 'ST', 'OBC', 'GEN'], // Covers all, but focuses on vulnerable
+                    employment: ['Unemployed', 'Salaried', 'Farmer', 'Self-Employed'],
+                    bpl_card: ['Yes'],
+                    location_type: ['Rural', 'Urban']
+                },
+                links: {
+                    apply: 'https://beneficiary.nha.gov.in/',
+                    pdf: 'https://pmjay.gov.in/sites/default/files/2020-01/PMJAY_Operational_Guidelines_0.pdf'
+                }
+            },
+            {
+                id: 'UjjwalaYojana',
+                name: 'Pradhan Mantri Ujjwala Yojana (PMUY)',
+                description: 'A scheme to provide LPG connections to women from Below Poverty Line (BPL) households.',
+                eligibility: {
+                    age: { min: 18 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // BPL households
+                    caste: ['SC', 'ST', 'OBC', 'GEN'],
+                    employment: ['Unemployed', 'Salaried', 'Farmer', 'Self-Employed'],
+                    gender: ['Female'],
+                    bpl_card: ['Yes']
+                },
+                links: {
+                    apply: 'https://pmuy.gov.in/',
+                    pdf: 'https://pmuy.gov.in/assets/pdf/PMUY-Scheme-Document.pdf'
+                }
+            },
+            {
+                id: 'E-Shram',
+                name: 'E-Shram Portal Registration',
+                description: 'National database for unorganized workers to provide social security benefits.',
+                eligibility: {
+                    age: { min: 16, max: 59 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // Unorganized workers
+                    employment: ['Unemployed', 'Self-Employed'],
+                    education_level: ['Illiterate', 'Primary', 'Middle', 'Secondary', 'Higher Secondary', 'Graduate', 'Post Graduate']
+                },
+                links: {
+                    apply: 'https://eshram.gov.in/',
+                    pdf: 'https://eshram.gov.in/assets/pdf/e-SHRAM-FAQs.pdf'
+                }
+            },
+            {
+                id: 'PM-KISAN',
+                name: 'Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)',
+                description: 'Income support scheme for all eligible farmer families across the country.',
+                eligibility: {
+                    age: { min: 18 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // All eligible farmer families
+                    employment: ['Farmer'],
+                    location_type: ['Rural']
+                },
+                links: {
+                    apply: 'https://pmkisan.gov.in/',
+                    pdf: 'https://pmkisan.gov.in/Documents/PM-KISAN-Scheme-Guidelines.pdf'
+                }
+            },
+            {
+                id: 'AtalPensionYojana',
+                name: 'Atal Pension Yojana (APY)',
+                description: 'A pension scheme for workers in the unorganized sector.',
+                eligibility: {
+                    age: { min: 18, max: 40 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // Not an income tax payer
+                    employment: ['Salaried', 'Self-Employed', 'Unemployed'],
+                },
+                links: {
+                    apply: 'https://www.npscra.nsdl.co.in/scheme-details.php',
+                    pdf: 'https://www.npscra.nsdl.co.in/APY-Scheme-Booklet.pdf'
+                }
+            },
+            {
+                id: 'SukanyaSamriddhi',
+                name: 'Sukanya Samriddhi Yojana (SSY)',
+                description: 'A small deposit scheme for a girl child, launched as a part of the Beti Bachao Beti Padhao campaign.',
+                eligibility: {
+                    age: { max: 10 }, // Age of girl child
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // No income criteria
+                    gender: ['Female'],
+                    marital_status: ['Single'] // Girl child must be unmarried
+                },
+                links: {
+                    apply: 'https://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=89',
+                    pdf: 'https://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=171'
+                }
+            },
+            {
+                id: 'MudraYojana',
+                name: 'Pradhan Mantri MUDRA Yojana (PMMY)',
+                description: 'Provides loans up to ₹10 lakh to non-corporate, non-farm small/micro enterprises.',
+                eligibility: {
+                    age: { min: 18 },
+                    income: { EWS: 0, LIG: 0, MIG1: 0, MIG2: 0, HIG: 0 }, // Small/micro enterprises
+                    employment: ['Self-Employed'],
+                },
+                links: {
+                    apply: 'https://www.mudra.org.in/',
+                    pdf: 'https://www.mudra.org.in/Mudra_Scheme_English.pdf'
+                }
+            }
+        ];
 
-        function checkEligibility() {
-            // Show loading
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
+        let currentUserData = {};
+        let currentEligibleSchemes = [];
 
-            // Get form data
-            const formData = {
-                age: parseInt(document.getElementById('age').value),
-                income: parseInt(document.getElementById('income').value),
-                state: document.getElementById('state').value,
-                caste: document.getElementById('caste').value,
-                employment: document.getElementById('employment').value
+        function getIncomeCategory(income) {
+            if (income <= 300000) return 'EWS';
+            if (income <= 600000) return 'LIG';
+            if (income <= 1200000) return 'MIG1';
+            if (income <= 1800000) return 'MIG2';
+            return 'HIG';
+        }
+
+        document.getElementById('eligibilityForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const age = parseInt(document.getElementById('age').value);
+            const income = parseInt(document.getElementById('income').value);
+            const state = document.getElementById('state').value;
+            const caste = document.getElementById('caste').value;
+            const employment = document.getElementById('employment').value;
+            const gender = document.getElementById('gender').value;
+            const disability = document.getElementById('disability').value;
+            const location_type = document.getElementById('location_type').value;
+            const bpl_card = document.getElementById('bpl_card').value;
+            const marital_status = document.getElementById('marital_status').value;
+            const education_level = document.getElementById('education_level').value;
+
+            currentUserData = {
+                age,
+                income,
+                state,
+                caste,
+                employment,
+                gender,
+                disability,
+                location_type,
+                bpl_card,
+                marital_status,
+                education_level
             };
 
-            currentUserData = formData;
+            currentEligibleSchemes = schemes.filter(scheme => {
+                const el = scheme.eligibility;
 
-            // Simulate API call delay
-            setTimeout(() => {
-                const eligibleSchemes = findEligibleSchemes(formData);
-                currentEligibleSchemes = eligibleSchemes;
-                displayResults(eligibleSchemes, formData);
-                
-                // Hide loading and show results
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('results').style.display = 'block';
-                
-                // Scroll to results
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-            }, 1500);
-        }
-
-        function findEligibleSchemes(userData) {
-            return schemesDatabase.filter(scheme => {
-                // Check income eligibility
-                if (scheme.eligibility.minIncome && userData.income < scheme.eligibility.minIncome) {
-                    return false;
-                }
-                if (scheme.eligibility.maxIncome && userData.income > scheme.eligibility.maxIncome) {
+                // Age check
+                if (el.age && (age < el.age.min || (el.age.max && age > el.age.max))) {
                     return false;
                 }
 
-                // Check age eligibility
-                if (scheme.eligibility.minAge && userData.age < scheme.eligibility.minAge) {
-                    return false;
+                // Income check (simplified for now, will refine with categories)
+                // For now, if a scheme has income categories, assume it's income-based
+                // and if user income falls into any of the scheme's target categories, it's eligible.
+                // If scheme has no specific income categories, it's not filtered by income here.
+                if (el.income) {
+                    const userIncomeCategory = getIncomeCategory(income);
+                    let incomeEligible = false;
+                    for (const category in el.income) {
+                        if (el.income[category] !== undefined) { // Check if category is defined for the scheme
+                            if (category === userIncomeCategory) {
+                                incomeEligible = true;
+                                break;
+                            }
+                        }
+                    }
+                    // If scheme has income criteria but user's income category doesn't match any of the scheme's specified categories
+                    // and the scheme is not for all income groups (i.e., el.income has specific categories defined),
+                    // then it's not eligible based on income.
+                    if (Object.keys(el.income).length > 0 && !incomeEligible && (el.income.EWS !== 0 || el.income.LIG !== 0 || el.income.MIG1 !== 0 || el.income.MIG2 !== 0 || el.income.HIG !== 0)) {
+                        return false;
+                    }
                 }
-                if (scheme.eligibility.maxAge && userData.age > scheme.eligibility.maxAge) {
+
+                // Caste check
+                if (el.caste && !el.caste.includes(caste)) {
                     return false;
                 }
 
-                // Check caste category
-                if (scheme.eligibility.categories && !scheme.eligibility.categories.includes(userData.caste)) {
+                // Employment check
+                if (el.employment && !el.employment.includes(employment)) {
                     return false;
                 }
 
-                // Check employment type
-                if (scheme.eligibility.employment && !scheme.eligibility.employment.includes(userData.employment)) {
+                // Gender check
+                if (el.gender && !el.gender.includes(gender)) {
                     return false;
                 }
 
-                // Special conditions for Ayushman Bharat (senior citizens)
-                if (scheme.name.includes("Ayushman Bharat") && userData.age >= 70) {
-                    return true; // Senior citizens eligible regardless of income
+                // Disability check
+                if (el.disability && !el.disability.includes(disability)) {
+                    return false;
+                }
+
+                // Location type check
+                if (el.location_type && !el.location_type.includes(location_type)) {
+                    return false;
+                }
+
+                // BPL Card check
+                if (el.bpl_card && !el.bpl_card.includes(bpl_card)) {
+                    return false;
+                }
+
+                // Marital Status check
+                if (el.marital_status && !el.marital_status.includes(marital_status)) {
+                    return false;
+                }
+
+                // Education Level check
+                if (el.education_level && !el.education_level.includes(education_level)) {
+                    return false;
                 }
 
                 return true;
             });
-        }
 
-        function displayResults(schemes, userData) {
-            const schemesList = document.getElementById('schemesList');
-            
-            if (schemes.length === 0) {
-                schemesList.innerHTML = `
-                    <div class="no-results">
-                        <h3 data-lang-key="noSchemes">${translations[currentLanguage].noSchemes}</h3>
-                        <p data-lang-key="noSchemesDesc">${translations[currentLanguage].noSchemesDesc}</p>
-                    </div>
-                `;
-                document.getElementById('pdfDownloadSection').style.display = 'none';
+            displayResults(currentEligibleSchemes);
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function displayResults(filteredSchemes) {
+            const schemeResultsDiv = document.getElementById('schemeResults');
+            schemeResultsDiv.innerHTML = ''; // Clear previous results
+
+            if (filteredSchemes.length === 0) {
+                document.getElementById('noResultsMessage').style.display = 'block';
                 return;
             }
+            document.getElementById('noResultsMessage').style.display = 'none';
 
-            document.getElementById('pdfDownloadSection').style.display = 'block';
+            filteredSchemes.forEach(scheme => {
+                const schemeCard = document.createElement('div');
+                schemeCard.classList.add('scheme-card', 'eligible');
 
-            schemesList.innerHTML = schemes.map(scheme => {
-                const eligibilitySummary = generateEligibilitySummary(scheme, userData);
-                const schemeName = currentLanguage === 'hi' && scheme.nameHi ? scheme.nameHi : scheme.name;
-                const schemeDesc = currentLanguage === 'hi' && scheme.descriptionHi ? scheme.descriptionHi : scheme.description;
-                
-                return `
-                    <div class="scheme-card eligible" data-scheme-name="${scheme.name.toLowerCase()}" data-scheme-desc="${scheme.description.toLowerCase()}">
-                        <div class="scheme-title">${schemeName}</div>
-                        <div class="scheme-description">${schemeDesc}</div>
-                        <div class="eligibility-summary">
-                            <strong data-lang-key="eligibilitySummary">${translations[currentLanguage].eligibilitySummary}</strong> ${eligibilitySummary}
-                        </div>
-                        <div class="scheme-actions">
-                            <a href="${scheme.applyUrl}" target="_blank" class="apply-btn" data-lang-key="applyNow">${translations[currentLanguage].applyNow}</a>
-                            <a href="${scheme.pdfUrl}" target="_blank" class="pdf-btn" data-lang-key="downloadGuide">${translations[currentLanguage].downloadGuide}</a>
-                            <button class="form-btn" onclick="generateApplicationForm('${scheme.name}')" data-lang-key="generateForm">${translations[currentLanguage].generateForm}</button>
-                        </div>
+                let incomeSummary = '';
+                if (scheme.eligibility.income) {
+                    const categories = Object.keys(scheme.eligibility.income).filter(key => scheme.eligibility.income[key] !== 0);
+                    if (categories.length > 0) {
+                        incomeSummary = categories.map(cat => translations[currentLang][`income_category_${cat.toLowerCase()}`]).join(', ');
+                    } else {
+                        incomeSummary = translations[currentLang].income_category_general;
+                    }
+                }
+
+                schemeCard.innerHTML = `
+                    <h3 class="scheme-title">${scheme.name}</h3>
+                    <p class="scheme-description">${scheme.description}</p>
+                    <div class="eligibility-summary">
+                        <strong>Your Eligibility:</strong> 
+                        Annual Household Income (₹): ${currentUserData.income} (${incomeSummary}), 
+                        Age: ${currentUserData.age} years, 
+                        Caste Category: ${currentUserData.caste}, 
+                        Employment Type: ${currentUserData.employment},
+                        Gender: ${currentUserData.gender},
+                        Disability: ${currentUserData.disability},
+                        Location: ${currentUserData.location_type},
+                        BPL Card: ${currentUserData.bpl_card},
+                        Marital Status: ${currentUserData.marital_status},
+                        Education Level: ${currentUserData.education_level}
+                    </div>
+                    <div class="scheme-actions">
+                        <a href="${scheme.links.apply}" target="_blank" class="apply-btn" data-lang-key="apply_now">Apply Now</a>
+                        <a href="javascript:void(0)" onclick="generatePDFGuide(schemes.find(s => s.id === '${scheme.id}'))" class="pdf-btn" data-lang-key="download_pdf_guide">Download PDF Guide</a>
+                        <button onclick="generateApplicationForm('${scheme.id}')" class="form-btn" data-lang-key="generate_application_form">Generate Application Form</button>
                     </div>
                 `;
-            }).join('');
-        }
-
-        function filterSchemes(searchTerm) {
-            const schemeCards = document.querySelectorAll('.scheme-card');
-            const term = searchTerm.toLowerCase();
-
-            schemeCards.forEach(card => {
-                const schemeName = card.getAttribute('data-scheme-name');
-                const schemeDesc = card.getAttribute('data-scheme-desc');
-                
-                if (schemeName.includes(term) || schemeDesc.includes(term)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                schemeResultsDiv.appendChild(schemeCard);
             });
         }
 
-        function generateEligibilitySummary(scheme, userData) {
-            let summary = [];
-            
-            if (scheme.eligibility.maxIncome !== undefined) {
-                const incomeCategory = getIncomeCategory(userData.income);
-                summary.push(`${translations[currentLanguage].income || 'Income'}: ${incomeCategory}`);
+        document.getElementById('schemeSearch').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filtered = currentEligibleSchemes.filter(scheme => {
+                return scheme.name.toLowerCase().includes(searchTerm) || scheme.description.toLowerCase().includes(searchTerm);
+            });
+            displayResults(filtered);
+        });
+
+        function subscribeEmail() {
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value;
+            if (email) {
+                let subscribedEmails = JSON.parse(localStorage.getItem('subscribedEmails')) || [];
+                if (!subscribedEmails.includes(email)) {
+                    subscribedEmails.push(email);
+                    localStorage.setItem('subscribedEmails', JSON.stringify(subscribedEmails));
+                    alert('Thank you for subscribing! Your email has been saved.');
+                    emailInput.value = '';
+                } else {
+                    alert('This email is already subscribed.');
+                }
+            } else {
+                alert('Please enter a valid email address.');
             }
-            
-            summary.push(`${translations[currentLanguage].age || 'Age'}: ${userData.age} ${currentLanguage === 'hi' ? 'वर्ष' : 'years'}`);
-            summary.push(`${translations[currentLanguage].caste || 'Category'}: ${userData.caste}`);
-            summary.push(`${translations[currentLanguage].employment || 'Employment'}: ${userData.employment}`);
-            
-            return summary.join(', ');
         }
 
-        function getIncomeCategory(income) {
-            if (income <= 300000) return translations[currentLanguage].income_ews;
-            if (income <= 600000) return translations[currentLanguage].income_lig;
-            if (income <= 1200000) return translations[currentLanguage].income_mig1;
-            if (income <= 1800000) return translations[currentLanguage].income_mig2;
-            return translations[currentLanguage].income_above;
+        function resetForm() {
+            document.getElementById('eligibilityForm').reset();
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('schemeResults').innerHTML = '';
+            document.getElementById('noResultsMessage').style.display = 'none';
+            document.getElementById('schemeSearch').value = '';
+            currentUserData = {};
+            currentEligibleSchemes = [];
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Generate PDF guide for scheme with Hindi/English support
+        function generatePDFGuide(scheme) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get current language
+            const isHindi = currentLang === 'hi';
+            
+            // Set font for Hindi support
+            doc.setFont("helvetica", "normal");
+            
+            // Header
+            doc.setFontSize(20);
+            doc.setTextColor(40, 40, 40);
+            const title = isHindi ? `${scheme.nameHi || scheme.name} - योजना गाइड` : `${scheme.name} - Scheme Guide`;
+            doc.text(title, 20, 30);
+            
+            // Add government logo placeholder
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            const govText = isHindi ? "भारत सरकार - आधिकारिक गाइड" : "Government of India - Official Guide";
+            doc.text(govText, 20, 45);
+            
+            // Scheme details
+            doc.setFontSize(16);
+            doc.setTextColor(40, 40, 40);
+            const aboutTitle = isHindi ? "योजना के बारे में:" : "About the Scheme:";
+            doc.text(aboutTitle, 20, 65);
+            
+            doc.setFontSize(12);
+            const description = isHindi ? (scheme.descriptionHi || scheme.description) : scheme.description;
+            const splitDescription = doc.splitTextToSize(description, 170);
+            doc.text(splitDescription, 20, 80);
+            
+            // Eligibility criteria
+            let yPos = 80 + (splitDescription.length * 7) + 15;
+            doc.setFontSize(16);
+            const eligibilityTitle = isHindi ? "पात्रता मानदंड:" : "Eligibility Criteria:";
+            doc.text(eligibilityTitle, 20, yPos);
+            
+            yPos += 15;
+            doc.setFontSize(12);
+            
+            // Income criteria
+            if (scheme.incomeRange) {
+                const incomeText = isHindi ? 
+                    `• वार्षिक आय: ₹${scheme.incomeRange.min.toLocaleString()} - ₹${scheme.incomeRange.max.toLocaleString()}` :
+                    `• Annual Income: ₹${scheme.incomeRange.min.toLocaleString()} - ₹${scheme.incomeRange.max.toLocaleString()}`;
+                doc.text(incomeText, 25, yPos);
+                yPos += 10;
+            }
+            
+            // Age criteria
+            if (scheme.ageRange) {
+                const ageText = isHindi ? 
+                    `• आयु सीमा: ${scheme.ageRange.min} - ${scheme.ageRange.max} वर्ष` :
+                    `• Age Range: ${scheme.ageRange.min} - ${scheme.ageRange.max} years`;
+                doc.text(ageText, 25, yPos);
+                yPos += 10;
+            }
+            
+            // Application process
+            yPos += 10;
+            doc.setFontSize(16);
+            const applicationTitle = isHindi ? "आवेदन प्रक्रिया:" : "Application Process:";
+            doc.text(applicationTitle, 20, yPos);
+            
+            yPos += 15;
+            doc.setFontSize(12);
+            const steps = isHindi ? [
+                "1. आधिकारिक वेबसाइट पर जाएं",
+                "2. आवश्यक दस्तावेज तैयार करें",
+                "3. ऑनलाइन आवेदन भरें",
+                "4. दस्तावेज अपलोड करें",
+                "5. आवेदन जमा करें और रसीद प्रिंट करें"
+            ] : [
+                "1. Visit the official website",
+                "2. Prepare required documents",
+                "3. Fill the online application",
+                "4. Upload documents",
+                "5. Submit application and print receipt"
+            ];
+            
+            steps.forEach(step => {
+                doc.text(step, 25, yPos);
+                yPos += 8;
+            });
+            
+            // Required documents
+            yPos += 10;
+            doc.setFontSize(16);
+            const documentsTitle = isHindi ? "आवश्यक दस्तावेज:" : "Required Documents:";
+            doc.text(documentsTitle, 20, yPos);
+            
+            yPos += 15;
+            doc.setFontSize(12);
+            const documents = isHindi ? [
+                "• आधार कार्ड",
+                "• आय प्रमाण पत्र",
+                "• जाति प्रमाण पत्र (यदि लागू हो)",
+                "• बैंक खाता विवरण",
+                "• पासपोर्ट साइज़ फोटो",
+                "• निवास प्रमाण पत्र"
+            ] : [
+                "• Aadhaar Card",
+                "• Income Certificate",
+                "• Caste Certificate (if applicable)",
+                "• Bank Account Details",
+                "• Passport Size Photos",
+                "• Residence Certificate"
+            ];
+            
+            documents.forEach(doc_item => {
+                doc.text(doc_item, 25, yPos);
+                yPos += 8;
+            });
+            
+            // Contact information
+            yPos += 15;
+            doc.setFontSize(16);
+            const contactTitle = isHindi ? "संपर्क जानकारी:" : "Contact Information:";
+            doc.text(contactTitle, 20, yPos);
+            
+            yPos += 15;
+            doc.setFontSize(12);
+            const websiteText = isHindi ? `आधिकारिक वेबसाइट: ${scheme.detailsUrl || scheme.links.apply}` : `Official Website: ${scheme.detailsUrl || scheme.links.apply}`;
+            doc.text(websiteText, 25, yPos);
+            yPos += 10;
+            
+            const helplineText = isHindi ? "हेल्पलाइन: 1800-XXX-XXXX" : "Helpline: 1800-XXX-XXXX";
+            doc.text(helplineText, 25, yPos);
+            
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(150, 150, 150);
+            const footerText = isHindi ? 
+                "यह गाइड YojanaCheck द्वारा तैयार किया गया है। कृपया नवीनतम जानकारी के लिए आधिकारिक वेबसाइट देखें।" :
+                "This guide is prepared by YojanaCheck. Please visit official website for latest information.";
+            const splitFooter = doc.splitTextToSize(footerText, 170);
+            doc.text(splitFooter, 20, 280);
+            
+            // Save the PDF
+            const fileName = isHindi ? 
+                `${scheme.id}_योजना_गाइड.pdf` : 
+                `${scheme.id}_Scheme_Guide.pdf`;
+            doc.save(fileName);
         }
 
-        // PDF Download functionality
-        function downloadPDF() {
-            if (!window.jsPDF) {
-                alert('PDF library not loaded. Please try again.');
-                return;
-            }
-
-            const { jsPDF } = window.jsPDF;
+        // PDF Report Downloadion
+        function generatePdfReport() {
+            const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
-            // Add title
-            doc.setFontSize(20);
-            doc.text('YojanaCheck - Scheme Eligibility Report', 20, 30);
+            doc.setFontSize(22);
+            doc.text('YojanaCheck - Scheme Eligibility Report', 10, 20);
 
-            // Add user details
-            doc.setFontSize(14);
-            doc.text('User Profile:', 20, 50);
             doc.setFontSize(12);
-            doc.text(`Age: ${currentUserData.age} years`, 20, 65);
-            doc.text(`Annual Income: ₹${currentUserData.income.toLocaleString()}`, 20, 75);
-            doc.text(`State: ${currentUserData.state}`, 20, 85);
-            doc.text(`Category: ${currentUserData.caste}`, 20, 95);
-            doc.text(`Employment: ${currentUserData.employment}`, 20, 105);
+            doc.text('Generated on: ' + new Date().toLocaleDateString(), 10, 30);
 
-            // Add eligible schemes
+            let y = 40;
             doc.setFontSize(14);
-            doc.text('Eligible Schemes:', 20, 125);
-            
-            let yPosition = 140;
-            currentEligibleSchemes.forEach((scheme, index) => {
+            doc.text('Your Profile:', 10, y);
+            y += 10;
+            doc.setFontSize(12);
+            for (const key in currentUserData) {
+                doc.text(`${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${currentUserData[key]}`, 10, y);
+                y += 7;
+            }
+
+            y += 10;
+            doc.setFontSize(14);
+            doc.text('Eligible Schemes:', 10, y);
+            y += 10;
+
+            if (currentEligibleSchemes.length === 0) {
                 doc.setFontSize(12);
-                doc.text(`${index + 1}. ${scheme.name}`, 20, yPosition);
-                
-                // Split description into multiple lines if needed
-                const splitDescription = doc.splitTextToSize(scheme.description, 170);
-                doc.setFontSize(10);
-                doc.text(splitDescription, 25, yPosition + 10);
-                
-                yPosition += 30 + (splitDescription.length * 5);
-                
-                // Add new page if needed
-                if (yPosition > 250) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-            });
+                doc.text('No schemes found for your profile.', 10, y);
+            } else {
+                currentEligibleSchemes.forEach(scheme => {
+                    doc.setFontSize(12);
+                    doc.text(`- ${scheme.name}`, 10, y);
+                    y += 7;
+                    doc.setFontSize(10);
+                    doc.text(scheme.description, 15, y, { maxWidth: 180 });
+                    y += 10;
+                    if (y > 280) { // Check for page overflow
+                        doc.addPage();
+                        y = 20; // Reset Y for new page
+                    }
+                });
+            }
 
-            // Add footer
-            doc.setFontSize(8);
-            doc.text('Generated by YojanaCheck - Government Scheme Eligibility Tool', 20, 280);
-            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 285);
-
-            // Download the PDF
-            doc.save('YojanaCheck-Eligibility-Report.pdf');
+            doc.save('YojanaCheck_Report.pdf');
         }
 
-        // WhatsApp sharing functionality
+        // WhatsApp Share
         function shareOnWhatsApp() {
-            const schemeNames = currentEligibleSchemes.map(scheme => scheme.name).join(', ');
-            const message = `Hi! I found I'm eligible for ${schemeNames} and other schemes using this free tool. Try it here: https://your-blog-url.com/yojanacheck`; // Replace with your actual blog URL
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            let schemesList = currentEligibleSchemes.map(s => s.name).join(', ');
+            if (schemesList.length > 100) {
+                schemesList = schemesList.substring(0, 97) + '...'; // Truncate if too long
+            }
+            const message = `Hi! I found I’m eligible for ${schemesList || 'several schemes'} using this free tool. Try it here: https://your-blog-url.com/yojanacheck`;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
 
-        // Generate Application Form
-        function generateApplicationForm(schemeName) {
-            const scheme = schemesDatabase.find(s => s.name === schemeName);
-            if (!scheme) return;
+        // Application Form Generation
+        let currentSchemeForForm = null;
 
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <h2>Application Form - ${scheme.name}</h2>
-                <p style="color: #dc3545; font-weight: bold; margin-bottom: 20px;">
-                    ⚠️ Disclaimer: This is a simulated form for demonstration purposes only. 
-                    Please visit the official website for actual application.
-                </p>
-                
-                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3>Pre-filled Information:</h3>
-                    <p><strong>Name:</strong> [To be filled by applicant]</p>
-                    <p><strong>Age:</strong> ${currentUserData.age} years</p>
-                    <p><strong>Annual Income:</strong> ₹${currentUserData.income.toLocaleString()}</p>
-                    <p><strong>State:</strong> ${currentUserData.state}</p>
-                    <p><strong>Category:</strong> ${currentUserData.caste}</p>
-                    <p><strong>Employment Type:</strong> ${currentUserData.employment}</p>
-                </div>
-                
-                <div style="background: #e7f3ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3>Scheme Details:</h3>
-                    <p><strong>Scheme Name:</strong> ${scheme.name}</p>
-                    <p><strong>Description:</strong> ${scheme.description}</p>
-                    <p><strong>Official Website:</strong> <a href="${scheme.applyUrl}" target="_blank">${scheme.applyUrl}</a></p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button onclick="downloadApplicationForm('${schemeName}')" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; margin-right: 10px;">
-                        Download Form as PDF
-                    </button>
-                    <button onclick="closeModal()" style="background: #6c757d; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer;">
-                        Close
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('applicationModal').style.display = 'block';
-        }
+        function generateApplicationForm(schemeId) {
+            currentSchemeForForm = schemes.find(s => s.id === schemeId);
+            if (!currentSchemeForForm) return;
 
-        function downloadApplicationForm(schemeName) {
-            const scheme = schemesDatabase.find(s => s.name === schemeName);
-            if (!scheme || !window.jsPDF) return;
+            const prefilledFormData = document.getElementById('prefilledFormData');
+            let formDataText = `--- Simulated Application Form for ${currentSchemeForForm.name} ---\n\n`;
+            formDataText += `Disclaimer: This is a simulated form for demonstration purposes only. Please refer to the official scheme website for actual application procedures.\n\n`;
+            formDataText += `User Details:\n`;
+            for (const key in currentUserData) {
+                formDataText += `- ${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${currentUserData[key]}\n`;
+            }
+            formDataText += `\nScheme Details:\n`;
+            formDataText += `- Scheme Name: ${currentSchemeForForm.name}\n`;
+            formDataText += `- Description: ${currentSchemeForForm.description}\n`;
+            formDataText += `- Official Link: ${currentSchemeForForm.links.apply}\n`;
+            formDataText += `\n--- Application Fields (Simulated) ---\n\n`;
+            formDataText += `1. Full Name: ____________________________________\n`;
+            formDataText += `2. Date of Birth: ${currentUserData.age ? new Date().getFullYear() - currentUserData.age : '_______'}\n`;
+            formDataText += `3. Address: ____________________________________\n`;
+            formDataText += `4. Contact Number: ____________________________________\n`;
+            formDataText += `5. Aadhar Number: ____________________________________\n`;
+            formDataText += `6. Income Proof (e.g., Salary Slip/ITR): ${currentUserData.income ? 'Attached' : 'Not Attached'}\n`;
+            formDataText += `7. Caste Certificate: ${currentUserData.caste !== 'GEN' ? 'Attached' : 'Not Applicable'}\n`;
+            formDataText += `8. Bank Account Details: ____________________________________\n`;
+            formDataText += `9. Declaration: I hereby declare that the information provided above is true and correct to the best of my knowledge.\n\n`;
+            formDataText += `Signature: _________________________\n`;
+            formDataText += `Date: ${new Date().toLocaleDateString()}\n`;
 
-            const { jsPDF } = window.jsPDF;
-            const doc = new jsPDF();
-
-            // Add title
-            doc.setFontSize(18);
-            doc.text(`Application Form - ${scheme.name}`, 20, 30);
-
-            // Add disclaimer
-            doc.setFontSize(10);
-            doc.setTextColor(255, 0, 0);
-            doc.text('⚠️ DISCLAIMER: This is a simulated form for demonstration purposes only.', 20, 45);
-            doc.text('Please visit the official website for actual application.', 20, 52);
-            doc.setTextColor(0, 0, 0);
-
-            // Add applicant details
-            doc.setFontSize(14);
-            doc.text('Applicant Details:', 20, 70);
-            doc.setFontSize(12);
-            doc.text('Name: ________________________________', 20, 85);
-            doc.text(`Age: ${currentUserData.age} years`, 20, 100);
-            doc.text(`Annual Income: ₹${currentUserData.income.toLocaleString()}`, 20, 115);
-            doc.text(`State: ${currentUserData.state}`, 20, 130);
-            doc.text(`Category: ${currentUserData.caste}`, 20, 145);
-            doc.text(`Employment Type: ${currentUserData.employment}`, 20, 160);
-
-            // Add scheme details
-            doc.setFontSize(14);
-            doc.text('Scheme Information:', 20, 185);
-            doc.setFontSize(12);
-            doc.text(`Scheme Name: ${scheme.name}`, 20, 200);
-            
-            const splitDescription = doc.splitTextToSize(`Description: ${scheme.description}`, 170);
-            doc.text(splitDescription, 20, 215);
-
-            doc.text(`Official Website: ${scheme.applyUrl}`, 20, 235 + (splitDescription.length * 5));
-
-            // Add signature section
-            doc.text('Applicant Signature: ________________________', 20, 260);
-            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 275);
-
-            // Download
-            doc.save(`${scheme.name.replace(/[^a-zA-Z0-9]/g, '_')}_Application_Form.pdf`);
-            closeModal();
+            prefilledFormData.textContent = formDataText;
+            document.getElementById('applicationFormModal').style.display = 'block';
         }
 
         function closeModal() {
-            document.getElementById('applicationModal').style.display = 'none';
+            document.getElementById('applicationFormModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('applicationModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        function downloadFormPdf() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(18);
+            doc.text(`Simulated Application Form for ${currentSchemeForForm.name}`, 10, 20);
+
+            doc.setFontSize(10);
+            doc.text('Disclaimer: This is a simulated form for demonstration purposes only. Please refer to the official scheme website for actual application procedures.', 10, 30, { maxWidth: 180 });
+
+            let y = 45;
+            doc.setFontSize(12);
+            const lines = document.getElementById('prefilledFormData').textContent.split('\n');
+            lines.forEach(line => {
+                doc.text(line, 10, y);
+                y += 7;
+                if (y > 280) {
+                    doc.addPage();
+                    y = 20;
+                }
+            });
+
+            doc.save(`${currentSchemeForForm.id}_Application_Form.pdf`);
+        }
+
+        // Detect if running in iframe and apply appropriate styling
+        function detectIframeMode() {
+            try {
+                if (window.self !== window.top) {
+                    document.body.classList.add('iframe-mode');
+                    // Additional iframe optimizations
+                    document.querySelector('.widget-container').style.maxWidth = '100%';
+                    document.querySelector('.widget-container').style.margin = '0';
+                    document.querySelector('.widget-container').style.borderRadius = '0';
+                    document.querySelector('.widget-container').style.boxShadow = 'none';
+                }
+            } catch (e) {
+                // If we can't access window.top, we're likely in an iframe
+                document.body.classList.add('iframe-mode');
             }
         }
 
-        function subscribeEmail() {
-            const email = document.getElementById('emailInput').value;
-            if (!email) {
-                alert(currentLanguage === 'hi' ? 'कृपया एक वैध ईमेल पता दर्ज करें।' : 'Please enter a valid email address.');
-                return;
+        // Initial language setup
+        document.addEventListener('DOMContentLoaded', () => {
+            detectIframeMode(); // Detect iframe mode first
+            
+            const savedLang = localStorage.getItem('yojanaCheckLanguage');
+            if (savedLang) {
+                document.getElementById('languageSelect').value = savedLang;
+                currentLang = savedLang;
             }
+            applyTranslations();
+        });
 
-            // Simulate email subscription (save to localStorage)
-            localStorage.setItem('yojanacheck_email', email);
-            alert(currentLanguage === 'hi' ? 
-                'सब्सक्राइब करने के लिए धन्यवाद! आपको नई सरकारी योजनाओं के बारे में अपडेट मिलेंगे।' : 
-                'Thank you for subscribing! You will receive updates about new government schemes.');
-            document.getElementById('emailInput').value = '';
-        }
+        // Prevent inspect element and copy-paste
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+                (e.ctrlKey && e.key === 'u') || 
+                (e.ctrlKey && e.key === 's')) {
+                e.preventDefault();
+            }
+        });
 
-        function resetTool() {
-            // Clear form fields
-            document.getElementById('eligibilityForm').reset();
-            // Hide results and loading sections
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('loading').style.display = 'none';
-            // Clear search filter
-            document.getElementById('schemeSearch').value = '';
-            // Scroll to top of the form
-            document.getElementById('eligibilityForm').scrollIntoView({ behavior: 'smooth' });
-            // Reset eligible schemes and user data
-            currentUserData = null;
-            currentEligibleSchemes = [];
-        }
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            alert('Copying is disabled on this page.');
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+
     </script>
 </body>
 </html>
